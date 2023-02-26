@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:tech_media/res/fonts.dart';
-
-import '../../res/color.dart';
+import 'package:social_media/res/fonts.dart';
+import 'package:social_media/view-model/splash/splash_services.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,6 +11,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    SplashServices.navigateToHome();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
@@ -21,17 +25,21 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image(image: AssetImage('assets/images/logo.jpg')),
+          Image(
+            image: const AssetImage('assets/images/logo.jpg'),
+            errorBuilder: (context, error, stackTrace) => const Placeholder(),
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
             child: Center(
-                child: Text(
-              'Tech Brothers Media',
-              style: TextStyle(
-                  fontFamily: AppFonts.sfProDisplayBold,
-                  fontSize: 40,
-                  fontWeight: FontWeight.w700),
-            )),
+              child: Text(
+                'Firebase Socail Media App',
+                style: TextStyle(
+                    fontFamily: AppFonts.sfProDisplayBold,
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
           )
         ],
       )),

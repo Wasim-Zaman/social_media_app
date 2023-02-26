@@ -1,4 +1,4 @@
-name: tech_media
+name: social_media
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -43,6 +43,7 @@ dependencies:
   firebase_database: ^10.0.6
   persistent_bottom_nav_bar:
   flutter_svg: ^1.1.5
+  get: ^4.6.5
 
 
 dev_dependencies:
