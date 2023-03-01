@@ -1,3 +1,1 @@
-class HomeServices {
-  static void authScreen() {}
-}
+class HomeServices {}

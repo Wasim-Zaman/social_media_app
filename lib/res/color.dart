@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primaryColor = Color(0xff58ee4a);
-  static const Color secondaryColor = Color.fromRGBO(19, 103, 33, 1);
+  static const Color primaryColor = Color.fromRGBO(233, 0, 100, 1);
+  static const Color secondaryColor = Color.fromRGBO(179, 0, 94, 1);
 
   static const Color primaryTextTextColor = Color(0xff242424);
   static const Color secondaryTextColor = Color(0xff8F92A1);
 
   static const Color primaryIconColor = Color(0xff242424);
 
-  static const Color successColor = Color(0xff04cd62);
+  static const Color successColor = Color.fromRGBO(191, 219, 56, 1);
 
   static const Color iconBackgroundColor = Color(0xffdfdfe1);
-  static const Color inputTextBorderColor = Color.fromRGBO(19, 103, 33, 1);
+  static const Color inputTextBorderColor = Color.fromRGBO(136, 164, 124, 1);
   static const Color hintColor = Color.fromRGBO(114, 114, 114, 1);
 
   static const Color textFieldDefaultFocus = Color(0xfff5f5f6);
   static const Color textFieldDefaultBorderColor = Color(0xfffdfdfe1);
-  static const Color textFieldFocusBorderColor = Color.fromRGBO(19, 103, 33, 1);
+  static const Color textFieldFocusBorderColor =
+      Color.fromRGBO(136, 164, 124, 1);
 
   static const Color alertColor = Color(0xffff0222);
   static const Color whiteColor = Color(0xffffffff);
