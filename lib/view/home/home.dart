@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:social_media/res/color.dart';
 import 'package:social_media/res/widgets/google_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:social_media/view/tabs/activity_feed_screen.dart';
+import 'package:social_media/view/tabs/profile_screen.dart';
+import 'package:social_media/view/tabs/search_screen.dart';
+import 'package:social_media/view/tabs/time_line_screen.dart';
+import 'package:social_media/view/tabs/upload_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,14 +20,18 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   static bool _isAuth = false;
   GoogleSignIn googleSignIn = GoogleSignIn();
+  PageController? _pageController;
+  int pageIndex = 2;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController();
+
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account!);
     }, onError: (err) {
-      print('Error signing in: $err');
+      ('Error signing in: $err');
       setState(() {
         _isAuth = false;
       });
@@ -30,11 +40,17 @@ class _HomeState extends State<Home> {
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
       handleSignIn(account!);
     }).catchError((err) {
-      print('Error signing in: $err');
+      ('Error signing in: $err');
       setState(() {
         _isAuth = false;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController!.dispose();
   }
 
   signIn() {
@@ -45,14 +61,32 @@ class _HomeState extends State<Home> {
     googleSignIn.signOut();
   }
 
+  onPageChanged(int pageIndex) {
+    // setState(() {
+    //   this._pageController = PageController(initialPage: pageIndex);
+    // });
+    setState(() {
+      this.pageIndex = pageIndex;
+    });
+  }
+
+  onTap(int index) {
+    // _pageController!.animateToPage(
+    //   index,
+    //   duration: const Duration(milliseconds: 300),
+    //   curve: Curves.easeInOut,
+    // );
+    _pageController?.jumpToPage(index);
+  }
+
   handleSignIn(GoogleSignInAccount account) {
     if (account != null) {
-      print('User signed in!: $account');
+      ('User signed in!: $account');
       setState(() {
         _isAuth = true;
       });
     } else {
-      print('User signed out!');
+      ('User signed out!');
       setState(() {
         _isAuth = false;
       });
@@ -99,9 +133,41 @@ class _HomeState extends State<Home> {
 
   buildUnAuthScreen() {
     return Scaffold(
-      appBar: AppBar(),
-      body: const Center(
-        child: Text("UnAuth Screen"),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+        padEnds: true,
+        pageSnapping: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
+          UploadScreen(),
+          SearchScreen(),
+          ActivityFeedScreen(),
+          TimelineScreen(),
+          ProfileScreen(),
+        ],
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        activeColor: Theme.of(context).primaryColor,
+        currentIndex: pageIndex,
+        onTap: onTap,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.photo_camera_rounded),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.whatshot, size: 50.0),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications_none_rounded),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_rounded),
+          ),
+        ],
       ),
     );
   }
